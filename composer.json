@@ -1,0 +1,5 @@
+{
+    "require": {
+        "zelenin/rss-generator": "^2.1"
+    }
+}
