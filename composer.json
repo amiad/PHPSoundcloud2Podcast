@@ -1,5 +1,5 @@
 {
-    "name": "amiad/PHPSoundcloud2Podcast",
+    "name": "amiad/php-soundcloud2podcast",
     "description": "Convert Soundcloud playlist or user to podcast feed",
     "version": "1.0",
     "type": "library",
