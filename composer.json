@@ -26,6 +26,6 @@
     "require": {
         "php": ">=5.4.0",
          "zelenin/rss-generator": "^2.1"
-    },
+    }
 }
 
