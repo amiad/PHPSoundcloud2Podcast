@@ -104,8 +104,8 @@ class Soundcloud2Podcast {
 
 	function add_items_to_feed($feed, $tracks){
 		$tracks = array_reverse($tracks);
-		$download_url = !empty($track->download_url) ? $track->download_url : $track->stream_url;
 		foreach ($tracks as $track){
+			$download_url = !empty($track->download_url) ? $track->download_url : $track->stream_url;
 			$feed->addItem()
 				->addItemTitle($track->title)
 				->addItemDescription($track->description)
