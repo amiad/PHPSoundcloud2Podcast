@@ -68,7 +68,7 @@ class Soundcloud2Podcast {
 	}
 
 	function get_feed($sc){
-		if ($cache = $this->get_cache)
+		if ($cache = $this->get_cache())
 			return $cache;
 
 		return $this->generate_feed($sc);
@@ -99,7 +99,7 @@ class Soundcloud2Podcast {
 
 		$this->addChannelImage($feed, $sc);
 		if (!empty($sc->license))
-			$feed->addChannelCopyright("$sc->license $this->user->username");
+			$feed->addChannelCopyright(sprintf("%s %s", $sc->license, $this->user->username));
 
 		return $feed;
 	}
