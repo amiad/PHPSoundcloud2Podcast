@@ -85,7 +85,7 @@ class Soundcloud2Podcast {
 		$feed = new \Zelenin\Feed;
 		$feed
 			->addChannel()
-			->addChannelTitle($sc->title)
+			->addChannelTitle(!empty($sc->title) ? $sc->title : $this->user->username)
 			->addChannelDescription($sc->description)
 			->addChannelLink($sc->permalink_url)
 			->addChannelCopyright("$sc->license $this->username")
