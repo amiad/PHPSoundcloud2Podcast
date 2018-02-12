@@ -18,11 +18,12 @@ class Soundcloud2Podcast {
 		'amr' => 'audio/amr',
 		'wma' => 'audio/x-ms-wma',
 	];
-	private $url, $user;
-	public $cache_time = '1 hour';
+	protected $url, $user;
+	protected $cache_time = '1 hour';
 
-	function __construct($url = '') {
+	function __construct($url = '', $cache_time = '1 hour') {
 		$this->url = $url;
+		$this->cache_time;
         $this->main();
     }
 
