@@ -100,12 +100,13 @@ class Soundcloud2Podcast {
 
 	function add_items_to_feed($feed, $tracks){
 		$tracks = array_reverse($tracks);
+		$download_url = !empty($track->download_url) ? $track->download_url : $track->stream_url;
 		foreach ($tracks as $track){
 			$feed->addItem()
 				->addItemTitle($track->title)
 				->addItemDescription($track->description)
 				->addItemLink($track->permalink_url)
-				->addItemEnclosure("$track->download_url?client_id=" . self::CLIENT_ID, $track->duration, self::MIMES[$track->original_format]);
+				->addItemEnclosure("$download_url?client_id=" . self::CLIENT_ID, $track->duration, self::MIMES[$track->original_format]);
 		}
 		return $feed;
 	}
@@ -145,5 +146,3 @@ class Soundcloud2Podcast {
 		return ['width' => $size[0], 'height' => $size[1]];
 	}
 }
-
-// add stream link support
