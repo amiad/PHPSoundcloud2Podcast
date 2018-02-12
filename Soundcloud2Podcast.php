@@ -133,7 +133,7 @@ class Soundcloud2Podcast {
 	}
 
 	function addChannelImage(&$feed, $sc){
-		$image_url = ($sc->kind != 'user' && !empty($sc->artwork_url)) ? $sc->artwork_url : $this->user->avatar_data;
+		$image_url = ($sc->kind != 'user' && !empty($sc->artwork_url)) ? $sc->artwork_url : $this->user->avatar_url;
 		if (!empty($image_url)){
 			$image_size = $this->get_image_size($image_url);
 			$feed
