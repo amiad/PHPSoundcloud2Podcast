@@ -145,3 +145,5 @@ class Soundcloud2Podcast {
 		return ['width' => $size[0], 'height' => $size[1]];
 	}
 }
+
+// add stream link support
