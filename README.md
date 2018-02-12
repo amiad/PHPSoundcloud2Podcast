@@ -9,7 +9,10 @@ Convert Soundcloud playlist or user to podcast feed
     1. Transfer souncloud url in url parameter:  
 http://<i></i>example.com/?url=https:<i></i>//soundcloud.com/user/
     2. Create new object with the url:  
-`new Soundcloud2Podcast('https://soundcloud.com/user/');`
+```
+require_once 'Soundcloud2Podcast.php';
+new Soundcloud2Podcast('https://soundcloud.com/user/');
+```
 
 ## License
 GPL.
