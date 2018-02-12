@@ -92,12 +92,14 @@ class Soundcloud2Podcast {
 			->addChannelTitle(!empty($sc->title) ? $sc->title : $this->user->username)
 			->addChannelDescription($sc->description)
 			->addChannelLink($sc->permalink_url)
-			->addChannelCopyright("$sc->license $this->username")
+
 			->addChannelPubDate(strtotime($sc->last_modified))
 			->addChannelLastBuildDate(strtotime($sc->last_modified))
 			->addChannelTtl(60);
 
 		$this->addChannelImage($feed, $sc);
+		if (!empty($sc->license))
+			$feed->addChannelCopyright("$sc->license $this->user->username");
 
 		return $feed;
 	}
