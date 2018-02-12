@@ -8,7 +8,7 @@ Convert Soundcloud playlist or user to podcast feed
 2. Install required dependencies with [Composer](https://getcomposer.org/):  
 `$ composer install`
 
-# Usage
+## Usage
 two options:
 - Transfer souncloud url in url parameter:  
 http://<i></i>example.com/?url=https:<i></i>//soundcloud.com/user/
