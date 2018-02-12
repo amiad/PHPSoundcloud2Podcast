@@ -31,6 +31,9 @@ class Soundcloud2Podcast {
 		$sc = $this->get_soundcloud_json();
 		if ($sc->kind != 'user')
 			$this->user = $this->get_soundcloud_json($sc->user->permalink_url);
+		else
+			$this->user = $sc;
+
 		echo $this->get_feed($sc);
 	}
 
@@ -133,7 +136,7 @@ class Soundcloud2Podcast {
 	}
 
 	function addChannelImage(&$feed, $sc){
-		$image_url = ($sc->kind != 'user' && !empty($sc->artwork_url)) ? $sc->artwork_url : $this->user->avatar_url;
+		$image_url = !empty($sc->artwork_url) ? $sc->artwork_url : $this->user->avatar_url;
 		if (!empty($image_url)){
 			$image_size = $this->get_image_size($image_url);
 			$feed
