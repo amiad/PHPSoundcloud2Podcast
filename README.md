@@ -11,8 +11,8 @@ Convert Soundcloud playlist or user to podcast feed
 ## Usage
 two options:
 <ul>
-<li>Transfer souncloud url in url parameter:  
-http://<i></i>example.com/?url=https:<i></i>//soundcloud.com/user/
+<li>Transfer souncloud url in url parameter:  <br>
+  <code>http<i></i>://example.com/?url=https:<i></i>//soundcloud.com/user/</code>
   </li>
 <li>Create new object with the url:  
 <pre><code>
