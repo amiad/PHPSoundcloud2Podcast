@@ -1,6 +1,13 @@
 {
-    "require": {
-         "zelenin/rss-generator": "^2.1"
-    }
+    "name": "amiad/soundcloud2podcast",
+    "description": "Convert Soundcloud playlist or user to podcast feed for PHP",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Amiad",
+            "email": "hatul@hatul.info"
+        }
+    ],
+    "require": {"zelenin/rss-generator": "^2.1"}
 }
-
