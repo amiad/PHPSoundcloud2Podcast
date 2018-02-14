@@ -28,33 +28,23 @@ class Soundcloud2Podcast {
     }
 
 	function main(){
-		$sc = $this->get_soundcloud_json();
-		if ($sc->kind != 'user')
-			$this->user = $this->get_soundcloud_json($sc->user->permalink_url);
-		else
-			$this->user = $sc;
-
-		echo $this->get_feed($sc);
+		echo $this->get_feed();
 	}
 
 	function get_soundcloud_url(){
 		$url = filter_input(INPUT_GET, 'url', FILTER_VALIDATE_URL);
+
+		if ($url)
+			$this->url = $url;
+		else
+			$url = $this->url;
+
 		if (empty($url) || stripos($url, 'https://soundcloud.com/') !== 0)
 			die('soundcloud url is wrong!');
 		return $url;
 	}
 
-	function get_soundcloud_json($url = false){
-
-		if (!$url){
-			if (empty($this->url)){
-				$url = $this->get_soundcloud_url();
-				$this->url = $url;
-			}
-			else
-				$url = $this->url;
-		}
-
+	function get_soundcloud_json($url){
 		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . self::CLIENT_ID . "&url=$url";
 		$req = file_get_contents($api_url);
 		if (!$req)
@@ -67,9 +57,17 @@ class Soundcloud2Podcast {
 		return $json;
 	}
 
-	function get_feed($sc){
-		if ($cache = $this->get_cache())
+	function get_feed(){
+		$url = $this->get_soundcloud_url();
+		$cache = $this->get_cache();
+		if ($cache)
 			return $cache;
+
+		$sc = $this->get_soundcloud_json($url);
+		if ($sc.kind != 'user')
+			$this->user = $this->get_soundcloud_json($sc->user->permalink_url);
+		else
+			$this->user = $sc;
 
 		return $this->generate_feed($sc);
 	}
@@ -112,15 +110,16 @@ class Soundcloud2Podcast {
 				->addItemTitle($track->title)
 				->addItemDescription($track->description)
 				->addItemLink($track->permalink_url)
-				->addItemEnclosure("$download_url?client_id=" . self::CLIENT_ID, $track->duration, self::MIMES[$track->original_format]);
+				->addItemGuid($track->permalink_url)
+				->addItemEnclosure("$download_url?client_id=" . self::CLIENT_ID, $track->original_content_size, self::MIMES[$track->original_format]);
 		}
 		return $feed;
 	}
 
 	function get_cache(){
 		$cache = $this->get_cache_path();
-		if (file_exists($cache) && time() - filemtime($cache) < $this->cache_time) {
-			return $cache;
+		if (file_exists($cache) && time() - filemtime($cache) < strtotime($this->cache_time)) {
+			return file_get_contents($cache);
 		}
 		else
 			return false;
