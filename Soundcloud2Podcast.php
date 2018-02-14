@@ -64,7 +64,8 @@ class Soundcloud2Podcast {
 			return $cache;
 
 		$sc = $this->get_soundcloud_json($url);
-		if ($sc.kind != 'user')
+
+		if ($sc->kind != 'user')
 			$this->user = $this->get_soundcloud_json($sc->user->permalink_url);
 		else
 			$this->user = $sc;
