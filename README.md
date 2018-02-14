@@ -15,10 +15,11 @@ two options:
   <code>http<i></i>://example.com/?url=https:<i></i>//soundcloud.com/user/</code>
   </li>
 <li>Create new object with the url:  
-<pre><code>
+  
+```php
 require_once 'Soundcloud2Podcast.php';
-new Soundcloud2Podcast('https<i></i>://soundcloud.com/user/');
-</code></pre>
+new Soundcloud2Podcast('https://soundcloud.com/user/');
+```
 </li>
 </ul>
 
