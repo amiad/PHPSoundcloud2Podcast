@@ -13,7 +13,7 @@ Convert Soundcloud playlist or user to podcast feed
 
 ### Composer
 1. Install soundcloud2podcast:  
-`$ composer require soundcloud2podcast`
+`$ composer require amiad/soundcloud2podcast`
 2. Create object:  
 
 ```php
