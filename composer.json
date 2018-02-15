@@ -1,18 +1,24 @@
 {
     "name": "amiad/soundcloud2podcast",
     "description": "Convert Soundcloud playlist or user to podcast feed for PHP",
+    "version": "1.0.0",
     "type": "library",
+	"keywords": [
+		"soundcloud",
+        "rss",
+        "feed",
+        "podcast"
+	],
     "license": "GPL-3.0-or-later",
 	"autoload": {
 		"psr-4": {
 			"Soundcloud2Podcast\\": ""
 		}
 	},
-    "authors": [
-        {
-            "name": "Amiad",
-            "email": "hatul@hatul.info"
-        }
-    ],
+    "homepage": "https://github.com/amiad/PHPSoundcloud2Podcast",
+    "support": {
+        "issues": "https://github.com/amiad/PHPSoundcloud2Podcast/issues",
+        "source": "https://github.com/amiad/PHPSoundcloud2Podcast"
+	},
     "require": {"zelenin/rss-generator": "^2.1"}
 }
