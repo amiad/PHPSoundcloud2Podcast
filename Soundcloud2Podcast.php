@@ -1,4 +1,5 @@
 <?php
+namespace Soundcloud2Podcast;
 
 class Soundcloud2Podcast {
 
