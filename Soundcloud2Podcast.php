@@ -29,7 +29,7 @@ class Soundcloud2Podcast {
     }
 
 	function main(){
-		header('Content-Type: application/rss+xml');
+		header('Content-Type: application/rss+xml; charset=utf-8');
 		echo $this->get_feed();
 	}
 
