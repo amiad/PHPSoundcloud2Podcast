@@ -144,8 +144,8 @@ class Soundcloud2Podcast {
 		if (!empty($image_url)){
 			$image_size = $this->get_image_size($image_url);
 			$feed
-				->addChannelImage($image_url, $sc->permalink_url, $image_size['width'], $image_size['height'], $sc->title)
-				->addChannelElement('itunes:image', '', ['href' => $image_url]);
+				->addChannelImage($image_url, $sc->permalink_url, $image_size['width'], $image_size['height'], $sc->title);
+			//$feed->addChannelElement('itunes:image', '', ['href' => $image_url]);
 		}
 	}
 
