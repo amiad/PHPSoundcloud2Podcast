@@ -94,7 +94,7 @@ class Soundcloud2Podcast {
 			->addChannelDescription($sc->description)
 			->addChannelLink($sc->permalink_url)
 
-			->addChannelPubDate(strtotime($sc->last_modified))
+			->addChannelPubDate(strtotime($sc->created_at))
 			->addChannelLastBuildDate(strtotime($sc->last_modified))
 			->addChannelTtl(60);
 
