@@ -50,11 +50,11 @@ class Soundcloud2Podcast {
 
 	function get_soundcloud_json($url){
 		$client_id = $this->get_local_client_id();
-		$req = get_soundcloud_api($client_id, false);
+		$req = $this->get_soundcloud_api($url, $client_id, false);
 
 		if (!$req){
 			$client_id = $this->save_remote_client_id;
-			$req = get_soundcloud_api($client_id, true);
+			$req = $this->get_soundcloud_api($url, $client_id, true);
 		}
 
 		$json = json_decode($req);
@@ -64,7 +64,7 @@ class Soundcloud2Podcast {
 		return $json;
 	}
 
-	function get_soundcloud_api($client_id, bool $die_if_failed){
+	function get_soundcloud_api($url, $client_id, bool $die_if_failed){
 		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . $client_id . "&url=$url";
 		$req = file_get_contents($api_url);
 		if (!$req && $die_if_failed)
@@ -182,6 +182,7 @@ class Soundcloud2Podcast {
 			die('request to youtube-dl failed!');
 
 		$pattern = '/_CLIENT_ID = \'([a-zA-Z0-9]*)\'/';
+		$matches = [];
 		preg_match($pattern , $req, $matches);
 
 		if (!$matches[1])
