@@ -52,7 +52,7 @@ class Soundcloud2Podcast {
 		$req = $this->get_soundcloud_api($url, $client_id, false);
 
 		if (!$req){
-			$client_id = $this->save_remote_client_id;
+			$client_id = $this->save_remote_client_id();
 			$req = $this->get_soundcloud_api($url, $client_id, true);
 		}
 
