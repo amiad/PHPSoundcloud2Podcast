@@ -114,6 +114,7 @@ class Soundcloud2Podcast {
 				->addItemDescription($track->description)
 				->addItemLink($track->permalink_url)
 				->addItemGuid($track->permalink_url)
+				->addItemPubDate($track->created_at)
 				->addItemEnclosure("$download_url?client_id=" . self::CLIENT_ID, $track->original_content_size, self::MIMES[$track->original_format]);
 		}
 		return $feed;
