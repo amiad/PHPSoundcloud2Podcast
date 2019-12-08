@@ -19,6 +19,8 @@ class Soundcloud2Podcast {
 		'amr' => 'audio/amr',
 		'wma' => 'audio/x-ms-wma',
 	];
+	const CLIENT_ID_PATH = 'client_id';
+	const YOUTUBE_DL_CLIENT_ID_URL = 'https://raw.githubusercontent.com/ytdl-org/youtube-dl/master/youtube_dl/extractor/soundcloud.py';
 	protected $url, $user;
 	protected $cache_time = '1 hour';
 
@@ -47,16 +49,28 @@ class Soundcloud2Podcast {
 	}
 
 	function get_soundcloud_json($url){
-		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . self::CLIENT_ID . "&url=$url";
-		$req = file_get_contents($api_url);
-		if (!$req)
-			die('request to soundcloud failed!');
+		$client_id = $this->get_local_client_id();
+		$req = get_soundcloud_api($client_id, false);
+
+		if (!$req){
+			$client_id = $this->save_remote_client_id;
+			$req = get_soundcloud_api($client_id, true);
+		}
 
 		$json = json_decode($req);
 		if (!$json)
 			die('json file is wrong!');
 
 		return $json;
+	}
+
+	function get_soundcloud_api($client_id, bool $die_if_failed){
+		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . $client_id . "&url=$url";
+		$req = file_get_contents($api_url);
+		if (!$req && $die_if_failed)
+			die('request to soundcloud failed!');
+		
+		return $req;
 	}
 
 	function get_feed(){
@@ -153,5 +167,27 @@ class Soundcloud2Podcast {
 	function get_image_size($url){
 		$size = getimagesize($url);
 		return ['width' => $size[0], 'height' => $size[1]];
+	}
+
+	function get_local_client_id(){
+		if (!file_exists(self::CLIENT_ID_PATH))
+			return $this->save_remote_client_id();
+
+		return file_get_contents(self::CLIENT_ID_PATH);
+	}
+
+	function save_remote_client_id(){
+		$req = file_get_contents(self::YOUTUBE_DL_CLIENT_ID_URL);
+		if (!$req)
+			die('request to youtube-dl failed!');
+
+		$pattern = '/_CLIENT_ID = \'([a-zA-Z0-9]*)\'/';
+		preg_match($pattern , $req, $matches);
+
+		if (!$matches[1])
+			die('clientid not found!');
+
+		file_put_contents(self::CLIENT_ID_PATH, $matches[1]);
+		return matches[1];
 	}
 }
