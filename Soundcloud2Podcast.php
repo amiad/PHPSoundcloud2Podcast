@@ -3,7 +3,7 @@ namespace Soundcloud2Podcast;
 
 class Soundcloud2Podcast {
 
-	const CLIENT_ID = "BeGVhOrGmfboy1LtiHTQF6Ejpt9ULJCI";
+	const CLIENT_ID = "UW9ajvMgVdMMW3cdeBi8lPfN6dvOVGji";
 	const MIMES = [
 		'aif' => 'audio/x-aiff',
 		'aiff' => 'audio/x-aiff',
