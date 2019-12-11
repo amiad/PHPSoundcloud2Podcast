@@ -20,7 +20,7 @@ class Soundcloud2Podcast {
 	];
 	const CLIENT_ID_PATH = 'client_id';
 	const YOUTUBE_DL_CLIENT_ID_URL = 'https://raw.githubusercontent.com/ytdl-org/youtube-dl/master/youtube_dl/extractor/soundcloud.py';
-	protected $url, $user;
+	protected $url, $user, $client_id;
 	protected $cache_time = '1 hour';
 
 	function __construct($url = '', $cache_time = '1 hour') {
@@ -48,12 +48,12 @@ class Soundcloud2Podcast {
 	}
 
 	function get_soundcloud_json($url){
-		$client_id = $this->get_local_client_id();
-		$req = $this->get_soundcloud_api($url, $client_id, false);
+		$this->client_id = $this->get_local_client_id();
+		$req = $this->get_soundcloud_api($url, false);
 
 		if (!$req){
-			$client_id = $this->save_remote_client_id();
-			$req = $this->get_soundcloud_api($url, $client_id, true);
+			$this->client_id = $this->save_remote_client_id();
+			$req = $this->get_soundcloud_api($url, true);
 		}
 
 		$json = json_decode($req);
@@ -63,8 +63,8 @@ class Soundcloud2Podcast {
 		return $json;
 	}
 
-	function get_soundcloud_api($url, $client_id, bool $die_if_failed){
-		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . $client_id . "&url=$url";
+	function get_soundcloud_api($url, bool $die_if_failed){
+		$api_url = "https://api.soundcloud.com/resolve.json?client_id=" . $this->client_id . "&url=$url";
 		$req = file_get_contents($api_url);
 		if (!$req && $die_if_failed)
 			die('request to soundcloud failed!');
@@ -128,14 +128,14 @@ class Soundcloud2Podcast {
 				->addItemLink($track->permalink_url)
 				->addItemGuid($track->permalink_url)
 				->addItemPubDate($track->created_at)
-				->addItemEnclosure("$download_url?client_id=" . self::CLIENT_ID, $track->original_content_size, self::MIMES[$track->original_format]);
+				->addItemEnclosure("$download_url?client_id=" . $this->client_id, $track->original_content_size, self::MIMES[$track->original_format]);
 		}
 		return $feed;
 	}
 
 	function get_cache(){
 		$cache = $this->get_cache_path();
-		if (file_exists($cache) && time() - filemtime($cache) < strtotime($this->cache_time)) {
+		if (file_exists($cache) && strtotime($this->cache_time, filemtime($cache)) > time()) {
 			return file_get_contents($cache);
 		}
 		else
@@ -172,7 +172,8 @@ class Soundcloud2Podcast {
 		if (!file_exists(self::CLIENT_ID_PATH))
 			return $this->save_remote_client_id();
 
-		return file_get_contents(self::CLIENT_ID_PATH);
+		$this->client_id = file_get_contents(self::CLIENT_ID_PATH);
+		return $this->client_id;
 	}
 
 	function save_remote_client_id(){
