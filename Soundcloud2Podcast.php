@@ -119,7 +119,7 @@ class Soundcloud2Podcast {
 	}
 
 	function add_items_to_feed($feed, $tracks){
-		$tracks = array_reverse($tracks);
+		usort($tracks, [$this, compare_by_time]);
 		foreach ($tracks as $track){
 			$download_url = !empty($track->download_url) ? $track->download_url : $track->stream_url;
 			$feed->addItem()
@@ -190,5 +190,9 @@ class Soundcloud2Podcast {
 
 		file_put_contents(self::CLIENT_ID_PATH, $matches[1]);
 		return matches[1];
+	}
+
+	function compare_by_time($track1, $track2){
+		return strtotime($track2->created_at) - strtotime($track1->created_at);
 	}
 }
