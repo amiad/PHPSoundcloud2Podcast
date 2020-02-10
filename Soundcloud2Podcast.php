@@ -172,7 +172,7 @@ class Soundcloud2Podcast {
 		if (!file_exists(self::CLIENT_ID_PATH))
 			return $this->save_remote_client_id();
 
-		$this->client_id = file_get_contents(self::CLIENT_ID_PATH);
+		$this->client_id = trim(file_get_contents(self::CLIENT_ID_PATH));
 		return $this->client_id;
 	}
 
