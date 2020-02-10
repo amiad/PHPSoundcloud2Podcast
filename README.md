@@ -26,4 +26,4 @@ new \Soundcloud2Podcast\Soundcloud2Podcast(url, cacheTime);
 ## License
 GPL.
 
-You can [contact me](https://gitter.im/PHPSoundcloud2Podcast/Lobby) for another license.
+An MIT licensed version is available on [xs:code](http://cp.xscode.com/amiad/PHPSoundcloud2Podcast).
